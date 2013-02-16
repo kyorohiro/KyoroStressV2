@@ -1,11 +1,16 @@
 package info.kyorohiro.helloworld.stressv2;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 
 public class BigEaterInfo {
-	private LinkedList<ProcessInfo> mInfo = new LinkedList<ProcessInfo>(); 
 
+	public static final String KEY_dalvik_vm_heapsize = "dalvik.vm.heapsize";
+	public static final String KEY_dalvik_vm_heapgrowthlimit = "dalvik.vm.heapgrowthlimit";
+	public static final String KEY_dalvik_vm_heapstartsize = "dalvik.vm.heapstartsize";
+
+	private LinkedList<ProcessInfo> mInfo = new LinkedList<ProcessInfo>(); 
 	private static BigEaterInfo sInstance = null;
 	public static BigEaterInfo getInstance() {
 		if(sInstance == null) {
@@ -15,6 +20,9 @@ public class BigEaterInfo {
 	}
 	private BigEaterInfo(){}
 	
+	//
+	//
+	// worker info
 	public synchronized int numOfWorker() {
 		return mInfo.size();
 	}
@@ -40,4 +48,21 @@ public class BigEaterInfo {
 	public void clear() {
 		mInfo.clear();
 	}
+	
+	//
+	// worker memory restriction info
+	//
+	private HashMap<String, String> mProperty = new HashMap<String, String>();
+	public String getProperty(String key, String def) {
+		if(!mProperty.containsKey(key)) {
+			return def;
+		}
+		return mProperty.get(key);
+	}
+
+	public void setProperty(String key, String value) {
+		android.util.Log.v("kiyo","key="+key+",value="+value);
+		mProperty.put(key,value);
+	}
+
 }

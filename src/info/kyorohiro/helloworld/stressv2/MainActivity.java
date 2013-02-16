@@ -9,6 +9,7 @@ import info.kyorohiro.helloworld.stress.task.StartBigEaterTask;
 import info.kyorohiro.helloworld.stress.task.StopBigEaterTask;
 import info.kyorohiro.helloworld.stressv2.guiparts.Button;
 import info.kyorohiro.helloworld.stressv2.guiparts.Button.CircleButtonListener;
+import info.kyorohiro.helloworld.stressv2.guiparts.Label;
 import info.kyorohiro.helloworld.stressv2.guiparts.ListView;
 import info.kyorohiro.helloworld.stressv2.menuparts.HeapSizeOfBigEaterDialog;
 import info.kyorohiro.helloworld.stressv2.menuparts.NumOfBigEaterDialog;
@@ -36,6 +37,7 @@ public class MainActivity extends Activity {
 	private Button mUpButton = new Button("up");
 	private Button mDownButton = new Button("down");
 	private ListView mBigEaterInfos = new ListView();
+	private Label mLabel = new Label();
 
 	private SingleTaskRunner mRunner = new SingleTaskRunner();
 
@@ -49,6 +51,7 @@ public class MainActivity extends Activity {
 		mStage.getRoot().addChild(mUpButton);
 		mStage.getRoot().addChild(mDownButton);
 		mStage.getRoot().addChild(mBigEaterInfos);
+		mStage.getRoot().addChild(mLabel);
 		setContentView(mStage);
 		init();
 	}
@@ -102,12 +105,6 @@ public class MainActivity extends Activity {
 	protected void onPause() {
 		mStage.stop();
 		super.onPause();
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_main, menu);
-		return true;
 	}
 
 	//

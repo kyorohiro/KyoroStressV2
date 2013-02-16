@@ -35,16 +35,6 @@ public class ListView extends SimpleDisplayObjectContainer {
 			graphics.drawText("tpd:"+info.mTPD+",pss:"+info.mTPss+",tsd:"+info.mTSD, 0, y+ya);
 			y += ya*2;
 		}
-
-		Application app = KyoroApplication.getKyoroApplication();
-		graphics.setColor(SimpleGraphicUtil.parseColor("#FFFF3300"));
-		graphics.drawText("lowMemory:"+KyoroMemoryInfo.getMemoryInfo(app).lowMemory, 50, 20);
-		graphics.drawText("availMem:"+KyoroMemoryInfo.getMemoryInfo(app).availMem, 50, 50);
-		graphics.drawText("threshold:"+KyoroMemoryInfo.getMemoryInfo(app).threshold, 50, 80);
-		graphics.drawText("dalvik.vm.heapsize:"+System.getProperty("dalvik.vm.heapsize"), 50, 110);
-		graphics.drawText("dalvik.vm.heapgrowthlimit:"+System.getProperty("dalvik.vm.heapgrowthlimit"), 50, 140);
-		graphics.drawText("dalvik.vm.heapstartsize:"+System.getProperty("dalvik.vm.heapstartsize"), 50, 170);
-
 		
 		//
 		if(!mTask.isAlive()){

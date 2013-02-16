@@ -7,6 +7,11 @@ public class ByteArrayBuilder {
 	private int mPointer = 0;
 	private byte[] mBuffer = new byte[256];
 
+	public void append(byte[] moji){
+		for(int i=0;i<moji.length;i++) {
+			append(moji[i]);
+		}
+	}
 	public void append(byte moji){
 		if(mPointer >= mBuffer.length){
 			updateBuffer();

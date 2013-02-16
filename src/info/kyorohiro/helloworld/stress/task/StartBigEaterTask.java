@@ -1,8 +1,5 @@
 package info.kyorohiro.helloworld.stress.task;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import info.kyorohiro.helloworld.stress.service.KyoroStressService;
 import info.kyorohiro.helloworld.stressv2.BigEaterInfo;
 import info.kyorohiro.helloworld.stressv2.KyoroApplication;

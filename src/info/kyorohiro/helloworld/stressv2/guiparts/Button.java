@@ -9,7 +9,7 @@ import info.kyorohiro.helloworld.pfdep.android.util.Utility;
 
 public class Button extends SimpleDisplayObjectContainer {
 
-	private int mRadius = (int)Utility.inchi2pixel(Utility.mm2inchi(20))/2;
+	private int mRadius = (int)Utility.inchi2pixel(Utility.mm2inchi(15))/2;
 	private String mLabel = "";
 	private CircleButtonListener mListener = null;
 
