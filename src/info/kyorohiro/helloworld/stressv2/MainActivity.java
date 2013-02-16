@@ -48,8 +48,8 @@ public class MainActivity extends Activity {
 		mStage.getRoot().addChild(new Layout());
 		mStage.getRoot().addChild(mStartButton);
 		mStage.getRoot().addChild(mStopButton);
-		mStage.getRoot().addChild(mUpButton);
-		mStage.getRoot().addChild(mDownButton);
+	//	mStage.getRoot().addChild(mUpButton);
+	//	mStage.getRoot().addChild(mDownButton);
 		mStage.getRoot().addChild(mBigEaterInfos);
 		mStage.getRoot().addChild(mLabel);
 		setContentView(mStage);

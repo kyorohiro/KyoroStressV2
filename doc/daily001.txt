@@ -1,49 +1,53 @@
-[�ۑ�] Low Memory Killer ���Ӑ}�I�ɔ�����������
+﻿[Work] Produce Low Memory Killer situation on purpose!!
+[課題] Low Memory Killer を意図的に発生させたい
+<ja>
+  Androidは、ヒープが涸渇すると、使われていないアプリをKillする機能があります。
+  KyoroStressV2では、意図的にのこの現象を発生させるアプリです。
 
-  Android�́A�q�[�v����������ƁA�g���Ă��Ȃ��A�v����Kill����@�\������܂��B
-  KyoroStressV2�ł́A�Ӑ}�I�ɂ̂��̌��ۂ𔭐�������A�v���ł��B
+     おおまかな仕組みは、単純にたくさんヒープを使用してあげるだけです。
+     なので、byte配列でもガバッととってあげれば、それだけで済むだけに思えます。
 
-     �����܂��Ȏd�g�݂́A�P���ɂ�������q�[�v���g�p���Ă����邾���ł��B
-     �Ȃ̂ŁAbyte�z��ł��K�o�b�ƂƂ��Ă�����΁A���ꂾ���ōςނ����Ɏv���܂��B
+    しかし、ひとつのアプリ(プロセス)が取得できるヒープの量は制限がされています。
+    このため、ただ単純にヒープを大量に消費するアプリを作れば良いとはならないのです。
 
-    �������A�ЂƂ̃A�v��(�v���Z�X)���擾�ł���q�[�v�̗ʂ͐���������Ă��܂��B
-    ���̂��߁A�����P���Ƀq�[�v���ʂɏ����A�v�������Ηǂ��Ƃ͂Ȃ�Ȃ��̂ł��B
+    また、当然ではありますが、このヒープを大量に消費しているアプリも、PFからKILLさせる対象ですから。
+   殺される事を前提としなければならません。
 
-    �܂��A���R�ł͂���܂����A���̃q�[�v���ʂɏ���Ă���A�v�����APF����KILL������Ώۂł�����B
-   �E����鎖��O��Ƃ��Ȃ���΂Ȃ�܂���B
+   では、KyoroStressV2/V1での解決方法を解説します。
+</ja>
+<en>
 
-   �ł́AKyoroStressV2/V1�ł̉������@��������܂��B
+</en>
 
+[KyoroTextでの解決方法]
+ 　KyoroStressでは、「 複数のServiceを、各々別プロセスで立つあげる。各々Serviceでヒープを大量に消費する。」という方法をとっています。
+    こうすることで、最初にあげた問題が解決できます。  
 
-[KyoroText�ł̉������@]
- �@KyoroStress�ł́A�u ������Service���A�e�X�ʃv���Z�X�ŗ�������B�e�XService�Ńq�[�v���ʂɏ����B�v�Ƃ������@���Ƃ��Ă��܂��B
-    �������邱�ƂŁA�ŏ��ɂ�������肪�����ł��܂��B  
-
-   -(��) �ЂƂ̃A�v���ŏ���ł���q�[�v����������Ă��邽�߁A�ЂƂ̃A�v���Œ[���̃q�[�v���������ĂĂ��Ԃ�����Ȃ��B
-   -(�|) �q�[�v�🿊����Ă���A�v����PF��KILL�����ꍇ������B
-   �Ƃ�������肪����܂����B
-  �@(��)�ɂ��ẮA�����̃v���Z�X�𗧂��グ��΁A�v���Z�X�~�ЂƂ̃A�v���Ŏ擾�\�ȃq�[�v�̃T�C�Y�����擾�ł��܂��B
-  (�|)�ɂ��Ă��A�����Ă���v���Z�X���E����Ă���v���Z�X�̕����q�[�v�������΂悢�̂ł��B
-   �Ƃ��������ɂ��܂������ł��܂��B
-
-
-[�Z�p�I�ȉۑ�]
- - Service���ƂɁA�ʃv���Z�X�ɂ�����@�́H
- - �A�v�����g�p�\�ȃq�[�v�𒲂ׂ���@�́H
- - Low Memory ��Ԃ��擾������@�́H
- - �������z���ăq�[�v���擾������@�H
+   -(松) ひとつのアプリで消費できるヒープが制限されているため、ひとつのアプリで端末のヒープが涸渇しててる状態をつくれない。
+   -(竹) ヒープを涸渇しているアプリがPFにKILLされる場合がある。
+   といった問題がありました。
+  　(松)については、複数のプロセスを立ち上げれば、プロセス×ひとつのアプリで取得可能なヒープのサイズだけ取得できます。
+  (竹)についても、生きているプロセスが殺されているプロセスの分もヒープを消費すればよいのです。
+   という感じにうまく解決できます。
 
 
-
-[�Q�l]
-- Android�ł̃q�[�v�s���ɂ���
-  Linux��OOM����������B ����̃��\�[�X���s������BJava�q�[�v���s������B �ЂƂ̃A�v�����擾�ł���q�[�v���s������B
-  �@�ƁA�q�[�v�s���ɂ́A���܂��܂Ȏ�ނ�����܂��B
-
-  KyoroStress�ň������Ƃ��Ă���̂́ALow Memory Killer�ł��B
+[技術的な課題]
+ - Serviceごとに、別プロセスにする方法は？
+ - アプリが使用可能なヒープを調べる方法は？
+ - Low Memory 状態を取得する方法は？
+ - 制限を越えてヒープを取得する方法？
 
 
-OOM����������O�ɁA�D��x��
-KyoroStress2�̋@�\�̈�Ƃ��āALow Memoey Killer�𔭐������āA
+
+[参考]
+- Androidでのヒープ不足について
+  LinuxでOOMが発生する。 特定のリソースが不足する。Javaヒープが不足する。 ひとつのアプリが取得できるヒープが不足する。
+  　と、ヒープ不足には、さまざまな種類があります。
+
+  KyoroStressで扱おうとしているのは、Low Memory Killerです。
+
+
+OOMが発生する前に、優先度が
+KyoroStress2の機能の一つとして、Low Memoey Killerを発生させて、
 
 
