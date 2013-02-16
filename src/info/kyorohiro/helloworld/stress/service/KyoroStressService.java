@@ -10,6 +10,7 @@ import info.kyorohiro.helloworld.stressv2.MainActivity;
 import info.kyorohiro.helloworld.stressv2.R;
 import info.kyorohiro.helloworld.stress.task.DeadOrAliveTask;
 import info.kyorohiro.helloworld.stress.task.EatUpJavaHeapTask;
+import info.kyorohiro.helloworld.stress.task.StressUtility;
 import info.kyorohiro.helloworld.util.KyoroMemoryInfo;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -286,10 +287,23 @@ public abstract class KyoroStressService extends ForegroundService {
 		@Override
 		public void run() {
 			try {
+				startForground("lahalito pf");
 				super.run();
-				startForground("eatuped");
+				startForground("kadorto to party");
 				DeadOrAliveTask task = new DeadOrAliveTask(KyoroStressService.this);
-				task.run();
+				try {
+					while(mTh==Thread.currentThread()){
+						task.run();
+						String retryValue = KyoroSetting.getRetry();
+						if(!KyoroSetting.RETRY_ON.equals(retryValue)){
+							break;
+						}
+						Thread.sleep(3000);
+					}
+				}catch(InterruptedException e) {
+
+				}
+				startForground("done all task");
 			} finally {
 
 			}

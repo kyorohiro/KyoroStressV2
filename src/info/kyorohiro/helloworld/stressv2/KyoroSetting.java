@@ -15,7 +15,7 @@ public class KyoroSetting {
 	public static final String TAG_RETRY = "retry";
 	public static final String RETRY_ON = "on";
 	public static final String RETRY_OFF = "off";
-	public static final String RETRY_DEFAULT = RETRY_OFF;
+	public static final String RETRY_DEFAULT = RETRY_ON;
 
 	public static String getRetry() {
 		String retry = RETRY_DEFAULT;

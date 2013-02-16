@@ -1,6 +1,7 @@
 package info.kyorohiro.helloworld.stress.task;
 
 
+import info.kyorohiro.helloworld.stress.service.KyoroStressService;
 import info.kyorohiro.helloworld.stressv2.KyoroSetting;
 
 import java.util.LinkedList;
@@ -29,7 +30,7 @@ public class EatUpJavaHeapTask implements Runnable {
 				retryValue = KyoroSetting.getRetry();
 				StressUtility.eatUpJavaHeap(mBuffer, mEatUpSize, mAtomSize);
 				if(KyoroSetting.RETRY_ON.equals(retryValue)&& mBuffer.size()*mAtomSize < mEatUpSize){
-					Thread.sleep(1500);
+					Thread.sleep(500);
 				} else {
 					break;
 				}

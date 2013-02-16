@@ -93,6 +93,7 @@ public class MainActivity extends Activity {
 			mStopButton.setPoint(bw+bw, h-bh);
 			mUpButton.setPoint(bw, h-bh*2);
 			mDownButton.setPoint(bw+bw, h-bh*2);
+			mStage.resetTimer();
 		}
 	}
 	@Override

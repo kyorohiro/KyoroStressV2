@@ -10,6 +10,7 @@ import info.kyorohiro.helloworld.display.simple.SimpleGraphics;
 import info.kyorohiro.helloworld.stress.task.SurveyBigEaterTask;
 import info.kyorohiro.helloworld.stressv2.BigEaterInfo;
 import info.kyorohiro.helloworld.stressv2.KyoroApplication;
+import info.kyorohiro.helloworld.stressv2.KyoroSetting;
 import info.kyorohiro.helloworld.stressv2.ProcessInfo;
 import info.kyorohiro.helloworld.util.KyoroMemoryInfo;
 import info.kyorohiro.helloworld.util.SingleTaskRunner;
@@ -31,8 +32,8 @@ public class ListView extends SimpleDisplayObjectContainer {
 			graphics.setColor(SimpleGraphicUtil.parseColor("#AA00FF00"));
 			graphics.drawLine(10, y+ya, graphics.getWidth()-20, y+ya);
 			graphics.setColor(SimpleGraphicUtil.parseColor("#77000000"));
-			graphics.drawText("id:"+info.mID+",pid:"+info.mPID, 0, y);
-			graphics.drawText("tpd:"+info.mTPD+",pss:"+info.mTPss+",tsd:"+info.mTSD, 0, y+ya);
+			graphics.drawText("id:"+info.mID+",pid:"+info.mPID+","+KyoroSetting.getBigEaterState(info.mID), 0, y);
+			graphics.drawText("tpd:"+info.mTPD+"byte,pss:"+info.mTPss+",tsd:"+info.mTSD, 0, y+ya);
 			y += ya*2;
 		}
 		
