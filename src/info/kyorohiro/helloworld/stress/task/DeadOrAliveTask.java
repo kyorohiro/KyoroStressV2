@@ -4,11 +4,11 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 import android.app.ActivityManager.RunningAppProcessInfo;
+import android.app.Application;
 import android.content.Context;
 import info.kyorohiro.helloworld.stressv2.KyoroApplication;
 import info.kyorohiro.helloworld.stressv2.KyoroSetting;
 import info.kyorohiro.helloworld.stress.service.KyoroStressService;
-import info.kyorohiro.helloworld.util.KyoroMemoryInfo;
 
 public class DeadOrAliveTask  implements Runnable {
 
@@ -37,22 +37,22 @@ public class DeadOrAliveTask  implements Runnable {
 		if(con==null) {
 			return;
 		}
-		KyoroMemoryInfo infos = new KyoroMemoryInfo();
 		List<RunningAppProcessInfo> list = null;
-		list = infos.getRunningAppList(KyoroApplication.getKyoroApplication());
-		String c = KyoroApplication.getKyoroApplication().getApplicationContext().getPackageName()+":"+processName;
+		Application application = KyoroApplication.getKyoroApplication();
+		list = KyoroStressService.getRunningBigEater(application);
+		String c = application.getApplicationContext().getPackageName()+":"+processName;
 
-		for(RunningAppProcessInfo i : list) {
+		for (RunningAppProcessInfo i : list) {
 			String p = i.processName;
-			if(p.equals(c)){
-				if(!KyoroStressService.START_SERVICE.equals(KyoroSetting.getBigEaterState(processName))){
+			if (p.equals(c)) {
+				if (!KyoroStressService.START_SERVICE.equals(KyoroSetting.getBigEaterState(processName))) {
 					KyoroStressService.stopService(clazz, con);
 				}
 				return;
 			}
 		}
 ///*
-		if(KyoroStressService.START_SERVICE.equals(KyoroSetting.getBigEaterState(processName))){
+		if (KyoroStressService.START_SERVICE.equals(KyoroSetting.getBigEaterState(processName))) {
 			KyoroStressService.startService(KyoroApplication.getKyoroApplication(), processName, "restart");
 		}
 //*/
