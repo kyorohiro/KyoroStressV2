@@ -14,6 +14,7 @@ import info.kyorohiro.helloworld.stressv2.guiparts.ListView;
 import info.kyorohiro.helloworld.stressv2.menuparts.HeapSizeOfBigEaterDialog;
 import info.kyorohiro.helloworld.stressv2.menuparts.NumOfBigEaterDialog;
 import info.kyorohiro.helloworld.stressv2.menuparts.RetryOfBigEaterDialog;
+import info.kyorohiro.helloworld.stressv2.menuparts.ShowNotificationOfBigEaterDialog;
 import info.kyorohiro.helloworld.util.SingleTaskRunner;
 import android.os.Bundle;
 import android.app.Activity;
@@ -30,6 +31,7 @@ public class MainActivity extends Activity {
 	public final static String MENU_SETTING_EATUP_JAVA_HEAP_SIZE = "eatup java heap size";
 	public final static String MENU_SETTING_BIGEATER_NUM = "num of bigeater";
 	public final static String MENU_SETTING_IS_RETRY = "is retry";
+	public final static String MENU_SETTING_IS_NOTIFICATION = "show notification";
 
 	private SimpleStageForAndroid mStage = null;
 	private Button mStartButton = new Button("start");
@@ -120,6 +122,7 @@ public class MainActivity extends Activity {
 			s.add(MENU_SETTING_BIGEATER_NUM);
 			s.add(MENU_SETTING_EATUP_JAVA_HEAP_SIZE);
 			s.add(MENU_SETTING_IS_RETRY);
+			s.add(MENU_SETTING_IS_NOTIFICATION);
 		}
 		Toast.makeText(MainActivity.this, "now working..",
 				Toast.LENGTH_LONG);
@@ -136,30 +139,27 @@ public class MainActivity extends Activity {
 
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		if (item != null
-				&& MainActivity.MENU_STOP.equals(item.getTitle())) {
+		if(item == null) {
+			return super.onMenuItemSelected(featureId, item);			
+		}
+		if (MainActivity.MENU_STOP.equals(item.getTitle())) {
 			stopAllTask();
 			return true;
-		} else if (item != null
-				&& MainActivity.MENU_START.equals(item.getTitle())) {
+		} else if (MainActivity.MENU_START.equals(item.getTitle())) {
 			startAllTask();
 			return true;
-		} else if (item != null
-				&& MainActivity.MENU_SETTING_EATUP_JAVA_HEAP_SIZE
-						.equals(item.getTitle())) {
+		} else if (MainActivity.MENU_SETTING_EATUP_JAVA_HEAP_SIZE.equals(item.getTitle())) {
 			stopAllTask();
-			HeapSizeOfBigEaterDialog.createDialog(MainActivity.this)
-					.show();
-		} else if (item != null
-				&& MainActivity.MENU_SETTING_BIGEATER_NUM.equals(item
-						.getTitle())) {
+			HeapSizeOfBigEaterDialog.createDialog(MainActivity.this).show();
+		} else if (MainActivity.MENU_SETTING_BIGEATER_NUM.equals(item.getTitle())) {
 			stopAllTask();
-			NumOfBigEaterDialog
-					.createDialog(MainActivity.this).show();
-		} else if(item != null
-				&& MainActivity.MENU_SETTING_IS_RETRY.equals(item.getTitle())) {
+			NumOfBigEaterDialog.createDialog(MainActivity.this).show();
+		} else if(MainActivity.MENU_SETTING_IS_RETRY.equals(item.getTitle())) {
 			stopAllTask();
 			RetryOfBigEaterDialog.createDialog(MainActivity.this).show();
+		} else if(MainActivity.MENU_SETTING_IS_NOTIFICATION.equals(item.getTitle())) {
+			stopAllTask();
+			ShowNotificationOfBigEaterDialog.createDialog(MainActivity.this).show();
 		}
 
 		return super.onMenuItemSelected(featureId, item);

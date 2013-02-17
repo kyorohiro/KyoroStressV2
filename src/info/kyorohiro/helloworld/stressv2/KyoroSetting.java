@@ -17,6 +17,30 @@ public class KyoroSetting {
 	public static final String RETRY_OFF = "off";
 	public static final String RETRY_DEFAULT = RETRY_ON;
 
+	public static final String TAG_NOTIFICATION = "notification";
+	public static final String NOTIFICATION_ON = "on";
+	public static final String NOTIFICATION_OFF = "off";
+	public static final String NOTIFICATION_DEFAULT = NOTIFICATION_ON;
+
+	public static String getNotification() {
+		String retry = NOTIFICATION_DEFAULT;
+		try {
+			String t = getData(TAG_NOTIFICATION);
+			if (t != null && !t.equals("none")) {
+				retry = t;
+			}
+		} catch (Throwable t) {
+		}
+		return retry;
+	}
+
+	public static void setNotification(String value) {
+		try {
+			setData(TAG_NOTIFICATION, value);
+		} catch (Throwable t) {
+		}
+	}
+
 	public static String getRetry() {
 		String retry = RETRY_DEFAULT;
 		try {
