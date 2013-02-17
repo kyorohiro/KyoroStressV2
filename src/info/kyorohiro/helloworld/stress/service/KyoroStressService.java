@@ -189,16 +189,18 @@ public abstract class KyoroStressService extends ForegroundService {
 		mBuffer = new LinkedList<byte[]>(); 
 		if (START_SERVICE.equals(""+KyoroSetting.getBigEaterState(getProperty()))) {
 			startForground("restart");
-		} 
+		}
+		onStartHandle(null);
 	}
 
 	@Override
 	public void onStartHandle(Intent intent) {
 		String message = "";
+		
 		if(intent !=null && null != intent.getExtras()){
 		    message = intent.getExtras().getString("message");
 		}
-
+/*
 		if(message != null && message.equals("end")){
 			// when still cant not showed notificartion
 			long endTime = System.currentTimeMillis();
@@ -215,7 +217,7 @@ public abstract class KyoroStressService extends ForegroundService {
 			Handler h = new Handler();
 			h.postDelayed(new DelayAndStop(),100);
 			return;
-		}
+		}*/
 
 		if(startTask()){
 			startForground(message);

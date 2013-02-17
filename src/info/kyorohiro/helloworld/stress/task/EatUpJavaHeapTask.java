@@ -16,6 +16,7 @@ public class EatUpJavaHeapTask implements Runnable {
 	public EatUpJavaHeapTask(LinkedList<byte[]> buffer) {
 		try {
 			mEatUpSize = KyoroSetting.getEatupHeapSize() * 1024;
+			android.util.Log.v("kiyo","---"+KyoroSetting.getEatupHeapSize());
 		} catch(Throwable t) {
 			t.printStackTrace();
 		}

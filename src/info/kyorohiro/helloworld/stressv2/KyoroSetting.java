@@ -94,7 +94,7 @@ public class KyoroSetting {
 	}
 
 	public static void setData(Context context, String property, String value) {
-		setData(context, property, value, null);
+		setData(context, property, value, "default");//null);
 	}
 
 	public static void setData(Context context, String property, String value, String tag) {
@@ -103,7 +103,7 @@ public class KyoroSetting {
 			if (tag == null) {
 				pref = PreferenceManager.getDefaultSharedPreferences(context);
 			} else {
-				pref = context.getSharedPreferences(tag, Context.MODE_WORLD_READABLE|Context.MODE_WORLD_WRITEABLE);
+				pref = context.getSharedPreferences(tag, Context.MODE_MULTI_PROCESS|Context.MODE_WORLD_READABLE|Context.MODE_WORLD_WRITEABLE);
 			}
 			pref.edit().putString(property, value).commit();
 		}
@@ -114,7 +114,7 @@ public class KyoroSetting {
 	}
 
 	public static String getData(Context context, String property) {
-		return getData(context, property, null);
+		return getData(context, property, "default");//null);
 	}
 
 	public static String getData(Context context, String property, String tag) {
@@ -123,7 +123,7 @@ public class KyoroSetting {
 			if (tag == null) {
 				pref = PreferenceManager.getDefaultSharedPreferences(context);
 			} else {
-				pref = context.getSharedPreferences(tag, Context.MODE_WORLD_READABLE);
+				pref = context.getSharedPreferences(tag, Context.MODE_MULTI_PROCESS|Context.MODE_WORLD_READABLE);
 			}
 			return pref.getString(property, "none");
 		}
