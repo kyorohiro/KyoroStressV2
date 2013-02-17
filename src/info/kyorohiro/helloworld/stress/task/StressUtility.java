@@ -6,22 +6,19 @@ import android.os.MemoryFile;
 
 public class StressUtility {
 
-	public static LinkedList<byte[]> eatUpJavaHeap(int eatUpSize, int atomSize) {
-		LinkedList<byte[]> list = new LinkedList<byte[]>();
-		return eatUpJavaHeap(list, eatUpSize, atomSize);
-	}
-
-	public static LinkedList<byte[]> eatUpJavaHeap(LinkedList<byte[]> list, int eatUpSize, int atomSize) {
+	public static long eatUpJavaHeap(LinkedList<byte[]> list, int eatUpSize, int atomSize) {
+		long ret = 0;
 		try {
 			while(list.size()*atomSize < eatUpSize) {
 				list.add(new byte[atomSize]);
+				ret += atomSize;
 			}
 		} catch(Throwable t) {
 			t.printStackTrace();
 		}
 		finally { 
 		}
-		return list;
+		return ret;
 	}
 
 	public static long eatUpHeapFromMemoryFile(LinkedList<MemoryFile> list, int eatUpSize, int atomSize) {

@@ -26,11 +26,12 @@ public class EatUpJavaHeapTask implements Runnable {
 	@Override
 	public void run() {
 		String retryValue = null;
+		long eatup = 0;
 		try {
 			while(true) {
 				retryValue = KyoroSetting.getRetry();
-				StressUtility.eatUpJavaHeap(mBuffer, mEatUpSize, mAtomSize);
-				if(KyoroSetting.RETRY_ON.equals(retryValue)&& mBuffer.size()*mAtomSize < mEatUpSize){
+				eatup = StressUtility.eatUpJavaHeap(mBuffer, mEatUpSize, mAtomSize);
+				if(KyoroSetting.RETRY_ON.equals(retryValue)&& eatup < mEatUpSize){
 					Thread.sleep(500);
 				} else {
 					break;
