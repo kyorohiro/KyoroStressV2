@@ -2,7 +2,6 @@ package info.kyorohiro.helloworld.util;
 
 
 import info.kyorohiro.helloworld.stress.service.KyoroStressService;
-import info.kyorohiro.helloworld.stressv2.BigEaterInfo;
 import info.kyorohiro.helloworld.stressv2.ProcessInfo;
 
 import java.util.List;

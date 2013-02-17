@@ -15,21 +15,31 @@ public class Label extends SimpleDisplayObject {
 
 	@Override
 	public void paint(SimpleGraphics graphics) {
+		int drawText_x = 50;
+		int drawText_y = 20;
+
 		Application app = KyoroApplication.getKyoroApplication();
 		BigEaterInfo eaterInfo = BigEaterInfo.getInstance();
 		graphics.setColor(SimpleGraphicUtil.parseColor("#FFFF3300"));
-		graphics.drawText("lowMemory:"+KyoroMemoryInfo.getMemoryInfo(app).lowMemory, 50, 20);
-		graphics.drawText("availMem:"+KyoroMemoryInfo.getMemoryInfo(app).availMem, 50, 50);
-		graphics.drawText("threshold:"+KyoroMemoryInfo.getMemoryInfo(app).threshold, 50, 80);
+		graphics.drawText("lowMemory:"+KyoroMemoryInfo.getMemoryInfo(app).lowMemory, drawText_x, drawText_y);
+		drawText_y+=30;
+		graphics.drawText("availMem:"+KyoroMemoryInfo.getMemoryInfo(app).availMem, drawText_x, drawText_y);
+		drawText_y+=30;
+		graphics.drawText("threshold:"+KyoroMemoryInfo.getMemoryInfo(app).threshold, drawText_x, drawText_y);
+		drawText_y+=30;
 		graphics.drawText("dalvik.vm.heapsize:"
-		+eaterInfo.getProperty(BigEaterInfo.KEY_dalvik_vm_heapsize, "none"), 50, 110);
+		+eaterInfo.getProperty(BigEaterInfo.KEY_dalvik_vm_heapsize, "none"), drawText_x, drawText_y);
+		drawText_y+=30;
 		graphics.drawText("dalvik.vm.heapgrowthlimit:"
-		+eaterInfo.getProperty(BigEaterInfo.KEY_dalvik_vm_heapgrowthlimit, "none"), 50, 140);
+		+eaterInfo.getProperty(BigEaterInfo.KEY_dalvik_vm_heapgrowthlimit, "none"), drawText_x, drawText_y);
+		drawText_y+=30;
 		graphics.drawText("dalvik.vm.heapstartsize:"
-		+eaterInfo.getProperty(BigEaterInfo.KEY_dalvik_vm_heapstartsize, "none"), 50, 170);
+		+eaterInfo.getProperty(BigEaterInfo.KEY_dalvik_vm_heapstartsize, "none"), drawText_x, drawText_y);
+		drawText_y+=30;
 
 		//
-		if(!mRunner.isAlive()&&!GetDalvikHeapInfoTask.sIsRun){
+		//
+		if (!mRunner.isAlive()&&!GetDalvikHeapInfoTask.sIsRun) {
 			mRunner.startTask(new GetDalvikHeapInfoTask());
 		}
 

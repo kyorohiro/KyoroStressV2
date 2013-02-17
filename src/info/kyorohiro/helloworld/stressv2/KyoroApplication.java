@@ -36,16 +36,18 @@ public class KyoroApplication extends Application {
 	private static class ToastMessage implements Runnable {
 		private Context mContext = null;
 		private String mMessage = null;
+
 		public ToastMessage(Context c, String m) {
 			mContext = c;
 			mMessage = m;
 		}
-		public void run(){
+
+		public void run() {
 			try {
 				Toast.makeText(mContext.getApplicationContext(), mMessage, Toast.LENGTH_SHORT).show();
 				mContext = null;
 				mMessage = null;
-			} catch(Throwable e){
+			} catch(Throwable e) {
 				e.printStackTrace();
 			} 
 		}

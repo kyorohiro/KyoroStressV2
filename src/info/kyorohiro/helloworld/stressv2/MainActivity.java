@@ -15,7 +15,7 @@ import info.kyorohiro.helloworld.stressv2.guiparts.ListView;
 import info.kyorohiro.helloworld.stressv2.menuparts.HeapSizeOfBigEaterDialog;
 import info.kyorohiro.helloworld.stressv2.menuparts.NumOfBigEaterDialog;
 import info.kyorohiro.helloworld.stressv2.menuparts.RetryOfBigEaterDialog;
-import info.kyorohiro.helloworld.stressv2.menuparts.ShowNotificationOfBigEaterDialog;
+import info.kyorohiro.helloworld.stressv2.menuparts.NotificationOfBigEaterDialog;
 import info.kyorohiro.helloworld.util.SingleTaskRunner;
 import android.os.Bundle;
 import android.app.Activity;
@@ -23,7 +23,6 @@ import android.app.ActivityManager.RunningAppProcessInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
-import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	public final static String MENU_STOP = "stop all";
@@ -88,7 +87,7 @@ public class MainActivity extends Activity {
 	public class Layout extends SimpleDisplayObject {
 		@Override
 		public void paint(SimpleGraphics graphics) {
-			int w = graphics.getWidth();
+//			int w = graphics.getWidth();
 			int h = graphics.getHeight();
 			int bw = mStartButton.getWidth();
 			int bh = mStartButton.getHeight();
@@ -125,8 +124,6 @@ public class MainActivity extends Activity {
 			s.add(MENU_SETTING_IS_RETRY);
 			s.add(MENU_SETTING_IS_NOTIFICATION);
 		}
-		Toast.makeText(MainActivity.this, "now working..",
-				Toast.LENGTH_LONG);
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -160,7 +157,7 @@ public class MainActivity extends Activity {
 			RetryOfBigEaterDialog.createDialog(MainActivity.this).show();
 		} else if(MainActivity.MENU_SETTING_IS_NOTIFICATION.equals(item.getTitle())) {
 			stopAllTask();
-			ShowNotificationOfBigEaterDialog.createDialog(MainActivity.this).show();
+			NotificationOfBigEaterDialog.createDialog(MainActivity.this).show();
 		}
 
 		return super.onMenuItemSelected(featureId, item);

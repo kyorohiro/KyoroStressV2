@@ -19,7 +19,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-public class ShowNotificationOfBigEaterDialog extends Dialog {
+public class NotificationOfBigEaterDialog extends Dialog {
 
 	private RadioGroup mRetry = null;
 	private RadioButton mOn = null;
@@ -28,11 +28,10 @@ public class ShowNotificationOfBigEaterDialog extends Dialog {
 	private Button mOK = null;
 	private LinearLayout mLayout = null;
 	private ViewGroup.LayoutParams mParams = 
-		new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT);
+		new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 	private WeakReference<Activity> mParent = null;
 
-	public ShowNotificationOfBigEaterDialog(Activity owner) {
+	public NotificationOfBigEaterDialog(Activity owner) {
 		super(owner);
 		mParent = new WeakReference<Activity>(owner);
 		mLayout = new LinearLayout(getContext());
@@ -66,7 +65,7 @@ public class ShowNotificationOfBigEaterDialog extends Dialog {
 		mOK.setText("Update");
 		mOK.setOnClickListener(new android.view.View.OnClickListener(){
 			public void onClick(View v) {
-			    ShowNotificationOfBigEaterDialog.this.dismiss();
+			    NotificationOfBigEaterDialog.this.dismiss();
 			    Activity a = mParent.get();
 			    if (mOn.isChecked()) {
 			    	KyoroSetting.setNotification(KyoroSetting.NOTIFICATION_ON);
@@ -81,8 +80,8 @@ public class ShowNotificationOfBigEaterDialog extends Dialog {
 		setContentView(mLayout, mParams);
 	}
 
-	public static ShowNotificationOfBigEaterDialog createDialog(Activity owner) {
-		return new ShowNotificationOfBigEaterDialog(owner);		
+	public static NotificationOfBigEaterDialog createDialog(Activity owner) {
+		return new NotificationOfBigEaterDialog(owner);		
 	}
 
 

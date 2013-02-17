@@ -13,7 +13,7 @@ public class BigEaterInfo {
 	private LinkedList<ProcessInfo> mInfo = new LinkedList<ProcessInfo>(); 
 	private static BigEaterInfo sInstance = null;
 	public static BigEaterInfo getInstance() {
-		if(sInstance == null) {
+		if (sInstance == null) {
 			sInstance = new BigEaterInfo();
 		}
 		return sInstance;

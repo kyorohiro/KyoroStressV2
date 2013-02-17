@@ -38,7 +38,7 @@ public class Button extends SimpleDisplayObjectContainer {
 	class BG extends SimpleDisplayObject {
 		@Override
 		public void paint(SimpleGraphics graphics) {
-			if(mIsTouched){
+			if (mIsTouched) {
 				graphics.setColor(Color.parseColor("#AAAAAAFF"));
 			} else {
 				graphics.setColor(Color.parseColor("#AAFFAAAA"));
@@ -55,7 +55,7 @@ public class Button extends SimpleDisplayObjectContainer {
 		private boolean mIsTouched = false;
 		@Override
 		public boolean onTouchTest(int x, int y, int action) {
-			if((x*x+y*y)<mRadius*mRadius){
+			if ((x*x+y*y)<mRadius*mRadius) {
 				mIsTouched = true;
 				//return true;
 			} else {
@@ -63,20 +63,20 @@ public class Button extends SimpleDisplayObjectContainer {
 			}
 			switch(action) {
 			case MotionEvent.ACTION_DOWN:
-				if((x*x+y*y)<mRadius*mRadius){
+				if ((x*x+y*y)<mRadius*mRadius) {
 					mIsTouched = true;
 					return true;
 				} else {
 					return false;
 				}
 			case MotionEvent.ACTION_UP:
-				if(mIsTouched&&mListener!=null){
+				if (mIsTouched&&mListener!=null) {
 					mListener.clicked(Button.this);
 				}
 				mIsTouched = false;
 				return false;
 			case MotionEvent.ACTION_MOVE:
-				if((x*x+y*y)<mRadius*mRadius){
+				if ((x*x+y*y)<mRadius*mRadius) {
 					mIsTouched = true;
 					return true;
 				} else {

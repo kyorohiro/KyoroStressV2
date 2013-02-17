@@ -2,7 +2,6 @@
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 
 public class KyoroSetting {
@@ -127,7 +126,8 @@ public class KyoroSetting {
 			if (tag == null) {
 				pref = PreferenceManager.getDefaultSharedPreferences(context);
 			} else {
-				pref = context.getSharedPreferences(tag, Context.MODE_MULTI_PROCESS|Context.MODE_WORLD_READABLE|Context.MODE_WORLD_WRITEABLE);
+				pref = context.getSharedPreferences(tag, 0x04//Context.MODE_MULTI_PROCESS
+						|Context.MODE_WORLD_READABLE|Context.MODE_WORLD_WRITEABLE);
 			}
 			pref.edit().putString(property, value).commit();
 		}
@@ -147,7 +147,8 @@ public class KyoroSetting {
 			if (tag == null) {
 				pref = PreferenceManager.getDefaultSharedPreferences(context);
 			} else {
-				pref = context.getSharedPreferences(tag, Context.MODE_MULTI_PROCESS|Context.MODE_WORLD_READABLE);
+				pref = context.getSharedPreferences(tag, 0x04//Context.MODE_MULTI_PROCESS
+						|Context.MODE_WORLD_READABLE);
 			}
 			return pref.getString(property, "none");
 		}
