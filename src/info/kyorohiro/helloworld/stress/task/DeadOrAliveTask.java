@@ -10,6 +10,9 @@ import info.kyorohiro.helloworld.stressv2.KyoroApplication;
 import info.kyorohiro.helloworld.stressv2.KyoroSetting;
 import info.kyorohiro.helloworld.stress.service.KyoroStressService;
 
+//
+//
+//
 public class DeadOrAliveTask  implements Runnable {
 
 	private WeakReference<Context> mRef = null;
@@ -22,7 +25,7 @@ public class DeadOrAliveTask  implements Runnable {
 		try {
 			int len = KyoroStressService.JavaHeapEater.length;
 			for (int i=0;i<len;i++) {
-				task(KyoroStressService.JavaHeapEater[i],KyoroStressService.ServiceProcessName[i]);
+				task(KyoroStressService.JavaHeapEater[i], KyoroStressService.ServiceProcessName[i]);
 				Thread.sleep(10);
 				Thread.yield();
 			}
@@ -37,24 +40,24 @@ public class DeadOrAliveTask  implements Runnable {
 		if(con==null) {
 			return;
 		}
-		List<RunningAppProcessInfo> list = null;
-		Application application = KyoroApplication.getKyoroApplication();
-		list = KyoroStressService.getRunningBigEater(application);
-		String c = application.getApplicationContext().getPackageName()+":"+processName;
 
+		if (KyoroStressService.START_SERVICE.equals(KyoroSetting.getBigEaterState(processName))) {
+			KyoroStressService.startService(KyoroApplication.getKyoroApplication(), processName, "restart");
+		}
+		
+		//
+		Application application = KyoroApplication.getKyoroApplication();
+		String processUrl = application.getApplicationContext().getPackageName()+":"+processName;
+		List<RunningAppProcessInfo> list = null;
+		list = KyoroStressService.getRunningBigEater(application);
 		for (RunningAppProcessInfo i : list) {
 			String p = i.processName;
-			if (p.equals(c)) {
+			if (p.equals(processUrl)) {
 				if (!KyoroStressService.START_SERVICE.equals(KyoroSetting.getBigEaterState(processName))) {
 					KyoroStressService.stopService(clazz, con);
 				}
 				return;
 			}
 		}
-///*
-		if (KyoroStressService.START_SERVICE.equals(KyoroSetting.getBigEaterState(processName))) {
-			KyoroStressService.startService(KyoroApplication.getKyoroApplication(), processName, "restart");
-		}
-//*/
 	}
 }
