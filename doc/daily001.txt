@@ -33,14 +33,38 @@
 
 [使い方]
   KyoroStressV2 
-  
-  
-[技術的な課題] 
- ※ 別の記事で解説します。
+   　# start 
+         ヒープの消費を開始します。
+         ヒープの消費率監視を開始する。
+  # stop
+         ヒープの消費を終了する。そして、開放する。
+  # num of big eater
+         起動するプロセスの数
+  # eatup java heap size
+         ひとつのプロセスが消費するヒープサイズ
+  # is retry
+         オンならば、ヒープを確保できるまで、何度もトライする。
+  # show notification
+         オンならば、Notificaiotn表示をする。
+　　# lowMoemory
+    true ならば、 ロウメモリー状態
+  # availMemory
+　　　使用可能なメモリ
+  # threshold
+        この値よりも低い場合は、ロウメモリー状態
+  #　dalvik.vm.heapsize 
+       ひとつのプロセスがandroid:largeHeap="true"の時に使用可能なJavaヒープ
+  #　dalvik.vm.heapgrowthlimit
+    android:largeHeap="false"の時に使用可能なJavaヒープ
+
+    
+[次回]
+   より、詳細な仕組みは別の記事で解説します。
  - Serviceごとに、別プロセスにする方法は？
  - アプリが使用可能なヒープを調べる方法は？
  - Low Memory 状態を取得する方法は？
  - 制限を越えてヒープを取得する方法？
+ - BigEaterの動作シナリオ
 
 
 
