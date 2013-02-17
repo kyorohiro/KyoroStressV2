@@ -1,4 +1,4 @@
-package info.kyorohiro.helloworld.pfdep.android.adapter;
+package info.kyorohiro.helloworld.display.pfdep.android.adapter;
 
 
 import info.kyorohiro.helloworld.display.simple.SimpleDisplayObject;

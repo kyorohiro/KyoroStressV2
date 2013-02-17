@@ -1,4 +1,4 @@
-package info.kyorohiro.helloworld.pfdep.android.util;
+package info.kyorohiro.helloworld.util;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;

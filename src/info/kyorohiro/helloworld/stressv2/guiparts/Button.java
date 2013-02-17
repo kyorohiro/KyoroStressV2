@@ -5,7 +5,7 @@ import android.view.MotionEvent;
 import info.kyorohiro.helloworld.display.simple.SimpleDisplayObject;
 import info.kyorohiro.helloworld.display.simple.SimpleDisplayObjectContainer;
 import info.kyorohiro.helloworld.display.simple.SimpleGraphics;
-import info.kyorohiro.helloworld.pfdep.android.util.Utility;
+import info.kyorohiro.helloworld.util.Utility;
 
 public class Button extends SimpleDisplayObjectContainer {
 

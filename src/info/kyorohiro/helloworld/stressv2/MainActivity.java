@@ -1,9 +1,10 @@
 package info.kyorohiro.helloworld.stressv2;
 
 import java.util.List;
+
+import info.kyorohiro.helloworld.display.pfdep.android.adapter.SimpleStageForAndroid;
 import info.kyorohiro.helloworld.display.simple.SimpleDisplayObject;
 import info.kyorohiro.helloworld.display.simple.SimpleGraphics;
-import info.kyorohiro.helloworld.pfdep.android.adapter.SimpleStageForAndroid;
 import info.kyorohiro.helloworld.stress.service.KyoroStressService;
 import info.kyorohiro.helloworld.stress.task.StartBigEaterTask;
 import info.kyorohiro.helloworld.stress.task.StopBigEaterTask;
