@@ -60,6 +60,9 @@ public class BigEaterInfo {
 		return mProperty.get(key);
 	}
 
+	//
+	//
+	//
 	public void setProperty(String key, String value) {
 		android.util.Log.v("kiyo","key="+key+",value="+value);
 		mProperty.put(key,value);

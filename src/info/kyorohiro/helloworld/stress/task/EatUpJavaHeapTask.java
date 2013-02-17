@@ -16,7 +16,7 @@ public class EatUpJavaHeapTask implements Runnable {
 		}
 		try {
 			mEatUpSize = KyoroSetting.getEatupHeapSize() * 1024;
-			android.util.Log.v("kiyo","---"+KyoroSetting.getEatupHeapSize());
+//			android.util.Log.v("kiyo","---"+KyoroSetting.getEatupHeapSize());
 		} catch(Throwable t) {
 			t.printStackTrace();
 		}
@@ -30,7 +30,7 @@ public class EatUpJavaHeapTask implements Runnable {
 		try {
 			while(true) {
 				retryValue = KyoroSetting.getRetry();
-				eatup = StressUtility.eatUpJavaHeap(mBuffer, mEatUpSize, mAtomSize);
+				eatup += StressUtility.eatUpJavaHeap(mBuffer, mEatUpSize, mAtomSize);
 				if(KyoroSetting.RETRY_ON.equals(retryValue)&& eatup < mEatUpSize){
 					Thread.sleep(500);
 				} else {
