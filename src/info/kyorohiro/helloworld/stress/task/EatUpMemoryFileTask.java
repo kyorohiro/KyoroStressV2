@@ -4,19 +4,20 @@ package info.kyorohiro.helloworld.stress.task;
 import info.kyorohiro.helloworld.stressv2.KyoroSetting;
 import java.util.LinkedList;
 
+import android.os.MemoryFile;
 
-public class EatUpJavaHeapTask implements Runnable {
-	private LinkedList<byte[]> mBuffer = new LinkedList<byte[]>();
+
+public class EatUpMemoryFileTask implements Runnable {
+	private LinkedList<MemoryFile> mBuffer = new LinkedList<MemoryFile>();
 	public static int mEatUpSize = 10*1024*1024;
 	public static int mAtomSize = 1024*4;
 
-	public EatUpJavaHeapTask(LinkedList<byte[]> buffer) {
+	public EatUpMemoryFileTask(LinkedList<MemoryFile> buffer) {
 		if(buffer == null) {
-			buffer = new LinkedList<byte[]>();
+			buffer = new LinkedList<MemoryFile>();
 		}
 		try {
 			mEatUpSize = KyoroSetting.getEatupHeapSize() * 1024;
-			android.util.Log.v("kiyo","---"+KyoroSetting.getEatupHeapSize());
 		} catch(Throwable t) {
 			t.printStackTrace();
 		}
@@ -29,8 +30,8 @@ public class EatUpJavaHeapTask implements Runnable {
 		try {
 			while(true) {
 				retryValue = KyoroSetting.getRetry();
-				StressUtility.eatUpJavaHeap(mBuffer, mEatUpSize, mAtomSize);
-				if(KyoroSetting.RETRY_ON.equals(retryValue)&& mBuffer.size()*mAtomSize < mEatUpSize){
+				long size = StressUtility.eatUpHeapFromMemoryFile(mBuffer, mEatUpSize, mAtomSize);
+				if(KyoroSetting.RETRY_ON.equals(retryValue)&& size < mEatUpSize) {
 					Thread.sleep(500);
 				} else {
 					break;

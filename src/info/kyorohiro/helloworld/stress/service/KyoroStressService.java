@@ -10,6 +10,7 @@ import info.kyorohiro.helloworld.stressv2.MainActivity;
 import info.kyorohiro.helloworld.stressv2.R;
 import info.kyorohiro.helloworld.stress.task.DeadOrAliveTask;
 import info.kyorohiro.helloworld.stress.task.EatUpJavaHeapTask;
+import info.kyorohiro.helloworld.stress.task.EatUpMemoryFileTask;
 import info.kyorohiro.helloworld.stress.task.StressUtility;
 import info.kyorohiro.helloworld.util.KyoroMemoryInfo;
 import android.app.Activity;
@@ -262,11 +263,14 @@ public abstract class KyoroStressService extends ForegroundService {
 	// Task
 	//
 	private Thread mTh = null;
+	private Object mHeap = null;
 
 	public boolean startTask() {
-		if(mTh == null /*|| !mTh.isAlive()*/) {
-			mTh = new MyStarter(new EatUpJavaHeapTask(mBuffer));
+		if(mTh == null || mHeap == null /*|| !mTh.isAlive()*/) {
+			mTh = new MyStarter((EatUpJavaHeapTask)(mHeap = new EatUpJavaHeapTask(null)));
+//			mTh = new MyStarter((EatUpMemoryFileTask)(mHeap = new EatUpMemoryFileTask(null)));
 			mTh.start();
+			android.util.Log.v("kiyo",""+mHeap);
 			return true;
 		}
 		else {
