@@ -19,9 +19,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-public class NotificationOfBigEaterDialog extends Dialog {
+public class MemoryFileOfBigEaterDialog extends Dialog {
 
-	private RadioGroup mNotification = null;
+	private RadioGroup mRetry = null;
 	private RadioButton mOn = null;
 	private RadioButton mOff = null;
 
@@ -31,46 +31,46 @@ public class NotificationOfBigEaterDialog extends Dialog {
 		new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 	private WeakReference<Activity> mParent = null;
 
-	public NotificationOfBigEaterDialog(Activity owner) {
+	public MemoryFileOfBigEaterDialog(Activity owner) {
 		super(owner);
 		mParent = new WeakReference<Activity>(owner);
 		mLayout = new LinearLayout(getContext());
 		TextView label = new TextView(getContext());
 		label.setText("--show notifcation--");
-		mNotification = new RadioGroup(getContext());
+		mRetry = new RadioGroup(getContext());
 		mOn = new RadioButton(getContext());
-		mOn.setText(KyoroSetting.NOTIFICATION_ON);
+		mOn.setText(KyoroSetting.MEMORYFILE_ON);
 		mOn.setId(1);
 		mOff = new RadioButton(getContext());
-		mOff.setText(KyoroSetting.NOTIFICATION_OFF);
+		mOff.setText(KyoroSetting.MEMORYFILE_OFF);
 		mOff.setId(2);
-		mNotification.addView(mOn);
-		mNotification.addView(mOff);
+		mRetry.addView(mOn);
+		mRetry.addView(mOff);
 
-		if (KyoroSetting.NOTIFICATION_ON.equals(KyoroSetting.getNotification())) {
-			mNotification.check(1);
+		if (KyoroSetting.MEMORYFILE_ON.equals(KyoroSetting.getIsMomoryFile())) {
+			mRetry.check(1);
 		} else {
-			mNotification.check(2);
+			mRetry.check(2);
 		}
 
 		mLayout.setOrientation(LinearLayout.VERTICAL);
-		mLayout.addView(mNotification);
+		mLayout.addView(mRetry);
 		mLayout.addView(label, mParams);
 		TextView memo = new TextView(getContext());
 		memo.setText(
-				"if on, show notification"+"\n" +
+				"if on, use memoryfile"+"\n" +
 				" "+"\n"
 				);
 		mOK = new Button(getContext());
 		mOK.setText("Update");
 		mOK.setOnClickListener(new android.view.View.OnClickListener(){
 			public void onClick(View v) {
-			    NotificationOfBigEaterDialog.this.dismiss();
+			    MemoryFileOfBigEaterDialog.this.dismiss();
 			    Activity a = mParent.get();
 			    if (mOn.isChecked()) {
-			    	KyoroSetting.setNotification(KyoroSetting.NOTIFICATION_ON);
+			    	KyoroSetting.setIsMemoryFile(KyoroSetting.MEMORYFILE_ON);
 			    } else {
-			    	KyoroSetting.setNotification(KyoroSetting.NOTIFICATION_OFF);		    	
+			    	KyoroSetting.setIsMemoryFile(KyoroSetting.MEMORYFILE_OFF);		    	
 			    }
 			    dismiss();
 			}
@@ -80,8 +80,8 @@ public class NotificationOfBigEaterDialog extends Dialog {
 		setContentView(mLayout, mParams);
 	}
 
-	public static NotificationOfBigEaterDialog createDialog(Activity owner) {
-		return new NotificationOfBigEaterDialog(owner);		
+	public static MemoryFileOfBigEaterDialog createDialog(Activity owner) {
+		return new MemoryFileOfBigEaterDialog(owner);		
 	}
 
 

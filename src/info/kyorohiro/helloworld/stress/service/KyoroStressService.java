@@ -147,7 +147,7 @@ public abstract class KyoroStressService extends ForegroundService {
 
 	public static Intent startService(Context context, String id, String message) {
 		Class clazz = getClassFromID(id);
-		android.util.Log.v("kiyo","kick startService:"+clazz.toString());
+//		android.util.Log.v("kiyo","kick startService:"+clazz.toString());
 		Intent startIntent = new Intent(context, clazz);
 	    if(message != null){
 	    	startIntent.putExtra("message", message);
@@ -263,14 +263,17 @@ public abstract class KyoroStressService extends ForegroundService {
 	// Task
 	//
 	private Thread mTh = null;
-	private Object mHeap = null;
+	public Object mHeap = null;
 
 	public boolean startTask() {
 		if(mTh == null || mHeap == null /*|| !mTh.isAlive()*/) {
-			mTh = new MyStarter((EatUpJavaHeapTask)(mHeap = new EatUpJavaHeapTask(null)));
-//			mTh = new MyStarter((EatUpMemoryFileTask)(mHeap = new EatUpMemoryFileTask(null)));
+			if (KyoroSetting.MEMORYFILE_ON.equals(KyoroSetting.getIsMomoryFile())) {
+				mTh = new MyStarter((EatUpMemoryFileTask)(mHeap = new EatUpMemoryFileTask(null)));
+			} else {
+				mTh = new MyStarter((EatUpJavaHeapTask)(mHeap = new EatUpJavaHeapTask(null)));
+			}
 			mTh.start();
-			android.util.Log.v("kiyo",""+mHeap);
+//			android.util.Log.v("kiyo",""+mHeap);
 			return true;
 		}
 		else {

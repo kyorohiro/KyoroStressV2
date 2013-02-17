@@ -13,6 +13,7 @@ import info.kyorohiro.helloworld.stressv2.guiparts.Button.CircleButtonListener;
 import info.kyorohiro.helloworld.stressv2.guiparts.Label;
 import info.kyorohiro.helloworld.stressv2.guiparts.ListView;
 import info.kyorohiro.helloworld.stressv2.menuparts.HeapSizeOfBigEaterDialog;
+import info.kyorohiro.helloworld.stressv2.menuparts.MemoryFileOfBigEaterDialog;
 import info.kyorohiro.helloworld.stressv2.menuparts.NumOfBigEaterDialog;
 import info.kyorohiro.helloworld.stressv2.menuparts.RetryOfBigEaterDialog;
 import info.kyorohiro.helloworld.stressv2.menuparts.NotificationOfBigEaterDialog;
@@ -32,6 +33,7 @@ public class MainActivity extends Activity {
 	public final static String MENU_SETTING_BIGEATER_NUM = "num of bigeater";
 	public final static String MENU_SETTING_IS_RETRY = "is retry";
 	public final static String MENU_SETTING_IS_NOTIFICATION = "show notification";
+	public final static String MENU_SETTING_IS_MEMORYFILE = "use memoryfile";
 
 	private SimpleStageForAndroid mStage = null;
 	private Button mStartButton = new Button("start");
@@ -123,6 +125,7 @@ public class MainActivity extends Activity {
 			s.add(MENU_SETTING_EATUP_JAVA_HEAP_SIZE);
 			s.add(MENU_SETTING_IS_RETRY);
 			s.add(MENU_SETTING_IS_NOTIFICATION);
+			s.add(MENU_SETTING_IS_MEMORYFILE);
 		}
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -158,6 +161,9 @@ public class MainActivity extends Activity {
 		} else if(MainActivity.MENU_SETTING_IS_NOTIFICATION.equals(item.getTitle())) {
 			stopAllTask();
 			NotificationOfBigEaterDialog.createDialog(MainActivity.this).show();
+		} else if(MainActivity.MENU_SETTING_IS_MEMORYFILE.equals(item.getTitle())) {
+			stopAllTask();
+			MemoryFileOfBigEaterDialog.createDialog(MainActivity.this).show();
 		}
 
 		return super.onMenuItemSelected(featureId, item);

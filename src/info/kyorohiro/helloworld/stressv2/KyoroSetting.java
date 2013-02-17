@@ -11,15 +11,48 @@ public class KyoroSetting {
 	public static final String TAG_NUM_OF_BIGEATER = "NumOfBigEater";
 	public static final int NUM_OF_BIGEATER_DEFAULT_VALUE = 12;
 	public static final int MEMSIZE_DEFAULT_VALUE = 1024 * 10;
+	
+	
+	// retry on/off
 	public static final String TAG_RETRY = "retry";
 	public static final String RETRY_ON = "on";
 	public static final String RETRY_OFF = "off";
 	public static final String RETRY_DEFAULT = RETRY_ON;
 
+	// notification on/off
 	public static final String TAG_NOTIFICATION = "notification";
 	public static final String NOTIFICATION_ON = "on";
 	public static final String NOTIFICATION_OFF = "off";
 	public static final String NOTIFICATION_DEFAULT = NOTIFICATION_ON;
+
+	// memoryfile on/off
+	public static final String TAG_MEMORYFILE = "memoryfile";
+	public static final String MEMORYFILE_ON = "on";
+	public static final String MEMORYFILE_OFF = "off";
+	public static final String MEMORYFILE_DEFAULT = MEMORYFILE_OFF;
+
+
+	
+	public static String getIsMomoryFile() {
+		String retry = MEMORYFILE_DEFAULT;
+		try {
+			String t = getData(TAG_MEMORYFILE);
+			if (t != null && !t.equals("none")) {
+				retry = t;
+			}
+		} catch (Throwable t) {
+		}
+		return retry;
+	}
+
+	public static void setIsMemoryFile(String value) {
+		try {
+			setData(TAG_MEMORYFILE, value);
+		} catch (Throwable t) {
+		}
+	}
+
+
 
 	public static String getNotification() {
 		String retry = NOTIFICATION_DEFAULT;
