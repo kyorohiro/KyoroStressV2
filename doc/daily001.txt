@@ -1,82 +1,145 @@
 ﻿[Work] Produce Low Memory Killer situation on purpose!!
 [課題] Low Memory Killer を意図的に発生させたい
 <ja>
-  Androidは、ヒープが涸渇すると、使われていないアプリをKillする機能があります。
-  KyoroStressV2では、意図的にのこの現象を発生させるアプリです。
-
-     おおまかな仕組みは、単純にたくさんヒープを使用してあげるだけです。
-     なので、byte配列でもガバッととってあげれば、それだけで済むだけに思えます。
-
-    しかし、ひとつのアプリ(プロセス)が取得できるヒープの量は制限がされています。
-    このため、ただ単純にヒープを大量に消費するアプリを作れば良いとはならないのです。
-
-    また、当然ではありますが、このヒープを大量に消費しているアプリも、PFからKILLさせる対象ですから。
-   殺される事を前提としなければならません。
-
-   では、KyoroStressV2/V1での解決方法を解説します。
+  Androidには、ヒープが涸渇すると使われていないアプリをKillする機能があります。
+  この記事では、意図的にヒープを枯渇させて、この状態をつくる方法について説明します。
 </ja>
 <en>
+　 Android PF have kill alive process when heigher priority process need heap. 
+ 　This report  explain that produce Low Memory Killer situation on purpose
+</en>
+<ja>
+  単純にヒープを大量に消費するアプリを作成すれば良いように思えます。
+  しかし、これだけでは上手くいきません。
+　   -A ひとつのアプリで消費できるヒープが制限されているため、ひとつのアプリで端末のヒープが涸渇している状態をつくれない。
+ 　  -B ヒープを涸渇しているアプリがPFにKILLされる場合がある。
+   といった問題があります。
 
+ KyoroStressV2での解決方法を紹介します。   
+</ja>
+<en>
+ you think it so simple. just to make application to consume many heap.
+ but, it difficult that your thinking way.
+ following problem
+  - A. Android PF restrict application java heap per one process.
+  - B. heap comsuming application is killed by Android PF.
+  
+ This report introduce KyoroStress 's solution.
 </en>
 
-[KyoroTextでの解決方法]
- 　KyoroStressでは、「 複数のServiceを、各々別プロセスで立つあげる。各々Serviceでヒープを大量に消費する。」という方法をとっています。
-    こうすることで、最初にあげた問題が解決できます。  
+<ja>
+[KyoroStressでの解決方法]
+  Kyoro Stress では、以下のような方法をとりました。
+    - 1. 複数のServiceを、各々異なるプロセスで起動する。
+    - 2. 各々Serviceで大量のヒープを消費する。
 
-   -(松) ひとつのアプリで消費できるヒープが制限されているため、ひとつのアプリで端末のヒープが涸渇しててる状態をつくれない。
-   -(竹) ヒープを涸渇しているアプリがPFにKILLされる場合がある。
-   といった問題がありました。
-  　(松)については、複数のプロセスを立ち上げれば、プロセス×ひとつのアプリで取得可能なヒープのサイズだけ取得できます。
-  (竹)についても、生きているプロセスが殺されているプロセスの分もヒープを消費すればよいのです。
-   という感じにうまく解決できます。
+  複数のプロセスを立ち上げれば、PFのヒープを枯渇させることができます。これで、(A)の問題が解決できました。
+  また、Bについては、「生きているプロセス」が「KILLされたプロセス」の分もヒープを消費すれば上手くいけそうです。
+</ja>
+<en>
+[KyoroStress solution]
+  Kyoro Stress done following approach.
+  in the process of differing respectively.
+    - 1. Booting many service in the process of differing respectively.
+    - 2. Each Service consumes a lot of heaps. 
 
+  The problem of A is solved by booting many process, and B too,
+  alive heap is more consume instead of kill service's heap 
+</en>
 
-[使い方]
-  KyoroStressV2 
-   　# start 
-         ヒープの消費を開始します。
-         ヒープの消費率監視を開始する。
-  # stop
-         ヒープの消費を終了する。そして、開放する。
-  # num of big eater
-         起動するプロセスの数
-  # eatup java heap size
-         ひとつのプロセスが消費するヒープサイズ
-  # is retry
-         オンならば、ヒープを確保できるまで、何度もトライする。
-  # show notification
-         オンならば、Notificaiotn表示をする。
-　　# lowMoemory
-    true ならば、 ロウメモリー状態
-  # availMemory
-　　　使用可能なメモリ
-  # threshold
-        この値よりも低い場合は、ロウメモリー状態
-  #　dalvik.vm.heapsize 
-       ひとつのプロセスがandroid:largeHeap="true"の時に使用可能なJavaヒープ
-  #　dalvik.vm.heapgrowthlimit
-    android:largeHeap="false"の時に使用可能なJavaヒープ
-  # lahalito"
-         ヒープ消費中
-  # kadorto
-         他サービスを復活中
-  # done all task
- 　　　 すべての作業を完了した。もう何もすることはない。
-
-[BigEaterの動作]
+<ja>
+[BigEater(ヒープ消費サービス)の動作]
+  KyoroStressV2で、ヒープを消費するサービスは以下のシナリオで動作しています。
   - 1. 指定されたヒープを取得する。
      is retry が true の時、指定されたヒープを取得できるまで、1を何度も繰り返す。
   - 2. KILLされたサービスを復活させる。
        is retry が true の時、Threadが死ぬまで、何度も2を繰り返す。
   - 3. 終了
+  といった感じです。
+  このままでは、すべてのServiceがPFにKILLされたら上手くいかないように思うかも知れません。
+  しかし、時間がたつと(数秒)、PFはKILLしたServiceを再起動します。
+  このため、ServiceがすべてKILLされても、ヒープを大量に消費しようとする状態は保持されます。
+</ja>
+<en>
+[BigEater(consuming heap service) 's senario]
+  - 1. consume the specified heap.
+  　　　　if retry is true, then consuming heap is repeated repeatedly until the specified heap is consumed
+  - 2. recovery killed service
+     if retry is true, then repeated repeatedly until killing this working thread.
+  - 3. END
+
+ you think. if ALL Service is killed by PF, when this senario is failed.
+ but no problem. PF revcovery Killed service.
+ so, keeping to consuming heap situation.
+</en>
+
+<ja>
+[使い方]
+  KyoroStressV2の操作方法について説明します。
+  # start 
+      ヒープの消費を開始します。
+      ヒープの消費率監視を開始する。
+  # stop
+      ヒープの消費を終了する。そして、開放する。
+  # num of big eater
+      起動するプロセスの数
+  # eatup java heap size
+      ひとつのプロセスが消費するヒープサイズ
+  # is retry
+      オンならば、ヒープを確保できるまで、何度もトライする。
+  # show notification
+      オンならば、Notificaiotn表示をする。
+　# lowMoemory
+      true ならば、 ロウメモリー状態
+  # availMemory
+　　　使用可能なメモリ
+  # threshold
+      この値よりも低い場合は、ロウメモリー状態
+  #　dalvik.vm.heapsize 
+      ひとつのプロセスがandroid:largeHeap="true"の時に使用可能なJavaヒープ
+  #　dalvik.vm.heapgrowthlimit
+      android:largeHeap="false"の時に使用可能なJavaヒープ
+  # lahalito
+      指定されたヒープを取得しにいっている状態
+  # kadorto
+      PFのKILLされたサービスを再起動させようとしている状態
+  # done all task
+ 　　 Serviceはすべての作業を完了した。そのため、もう何もすることはない状態
  
-[次回]
-   より、詳細な仕組みは別の記事で解説します。
- - Serviceごとに、別プロセスにする方法は？
- - アプリが使用可能なヒープを調べる方法は？
- - Low Memory 状態を取得する方法は？
- - 制限を越えてヒープを取得する方法？
+</ja> 
 
+<en>
+[使い方]
+  KyoroStressV2 's manual
+  # start 
+   start consuming heap.
+  # stop
+   stop consuming heap. and release.
+  # num of big eater
+   booting process num.
+  # eatup java heap size
+   consuming heap size per one process.
+  # is retry
+   retry option
+  # show notification
+   if true, consume notification.
+　# lowMoemory
+   if true, mean low memory state
+  # availMemory
+   available memory,
+  # threshold
+   boundary low memory state.
+  #　dalvik.vm.heapsize 
+   if android:largeHeap="true" 's application available heap size.
+  #　dalvik.vm.heapgrowthlimit
+   if android:largeHeap="false" 's application available heap size.
+  # lahalito
+   now consuming java heap
+  # kadorto
+   now recovery another killed process.
+  # done all task
+ 　　 all task is end.
 
+</en>
 
 
