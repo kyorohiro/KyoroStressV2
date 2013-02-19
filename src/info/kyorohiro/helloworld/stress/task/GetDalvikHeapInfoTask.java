@@ -1,7 +1,6 @@
 package info.kyorohiro.helloworld.stress.task;
 
 import java.io.InputStream;
-import java.nio.ByteBuffer;
 
 import info.kyorohiro.helloworld.stressv2.BigEaterInfo;
 import info.kyorohiro.helloworld.util.CLIAppKicker;

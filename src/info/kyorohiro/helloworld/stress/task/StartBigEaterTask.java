@@ -22,7 +22,12 @@ public class StartBigEaterTask implements Runnable {
 			processInfo.mID = KyoroStressService.getID(i);
 			info.append(processInfo);
 		}
-
+		int len = KyoroStressService.numOfBigEater();
+		for (int i=numOfWorker;i<len;i++) {
+			String id = KyoroStressService.getID(i);
+			StopBigEaterTask.stopService(id);
+			Thread.yield();
+		}
 		try {
 			ProcessInfo[] processInfos = info.getWorkerInfo();
 			for (ProcessInfo processInfo:processInfos) {
@@ -30,7 +35,6 @@ public class StartBigEaterTask implements Runnable {
 					Thread.sleep(100);
 					Thread.yield();
 			}
-
 		} catch (Exception e) {
 
 		}

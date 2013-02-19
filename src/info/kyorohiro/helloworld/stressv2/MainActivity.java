@@ -10,8 +10,8 @@ import info.kyorohiro.helloworld.stress.task.StartBigEaterTask;
 import info.kyorohiro.helloworld.stress.task.StopBigEaterTask;
 import info.kyorohiro.helloworld.stressv2.guiparts.Button;
 import info.kyorohiro.helloworld.stressv2.guiparts.Button.CircleButtonListener;
-import info.kyorohiro.helloworld.stressv2.guiparts.Label;
-import info.kyorohiro.helloworld.stressv2.guiparts.ListView;
+import info.kyorohiro.helloworld.stressv2.guiparts.PFMemoryInfoLabel;
+import info.kyorohiro.helloworld.stressv2.guiparts.RunningBigEaterInfoLabel;
 import info.kyorohiro.helloworld.stressv2.menuparts.HeapSizeOfBigEaterDialog;
 import info.kyorohiro.helloworld.stressv2.menuparts.MemoryFileOfBigEaterDialog;
 import info.kyorohiro.helloworld.stressv2.menuparts.NumOfBigEaterDialog;
@@ -40,8 +40,8 @@ public class MainActivity extends Activity {
 	private Button mStopButton = new Button("stop");
 	private Button mUpButton = new Button("up");
 	private Button mDownButton = new Button("down");
-	private ListView mBigEaterInfos = new ListView();
-	private Label mLabel = new Label();
+	private RunningBigEaterInfoLabel mBigEaterInfos = new RunningBigEaterInfoLabel();
+	private PFMemoryInfoLabel mLabel = new PFMemoryInfoLabel();
 
 	private SingleTaskRunner mRunner = new SingleTaskRunner();
 

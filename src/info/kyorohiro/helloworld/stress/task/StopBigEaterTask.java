@@ -1,7 +1,5 @@
 package info.kyorohiro.helloworld.stress.task;
 
-import java.util.LinkedList;
-import java.util.List;
 
 import info.kyorohiro.helloworld.stress.service.KyoroStressService;
 import info.kyorohiro.helloworld.stressv2.BigEaterInfo;
@@ -16,7 +14,20 @@ public class StopBigEaterTask implements Runnable {
 		stopAll();
 	}
 
-	private void stopAll() {
+	private static void stopAll() {
+		try {
+			int len = KyoroStressService.numOfBigEater();
+			for (int i=0;i<len;i++) {
+				String id = KyoroStressService.getID(i);
+				stopService(id);
+				Thread.sleep(10);
+				Thread.yield();
+			}
+		} catch (Exception e) {
+		}
+	}
+
+	private static void stopFromBigEaterInfo() {
 		BigEaterInfo info = BigEaterInfo.getInstance();
 		try {
 			ProcessInfo[] processInfos = info.getWorkerInfo();
@@ -25,13 +36,12 @@ public class StopBigEaterTask implements Runnable {
 					Thread.sleep(100);
 					Thread.yield();
 			}
-
 		} catch (Exception e) {
 
 		}
 	}
 
-	public void stopService(String id) {
+	public static void stopService(String id) {
 		android.util.Log.v("kiyo","#kick stopService:"+id);
 		Class clazz = KyoroStressService.getClassFromID(id);
 		KyoroSetting.setBigEaterState(id, KyoroStressService.STOP_SERVICE);

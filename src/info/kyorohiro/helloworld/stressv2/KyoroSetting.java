@@ -112,7 +112,7 @@ public class KyoroSetting {
 			if(valueAsString != null && !valueAsString.equals("none")) {
 				ret = Integer.parseInt(valueAsString);
 				if(ret<3){
-					ret = NUM_OF_BIGEATER_DEFAULT_VALUE;
+					ret = 3;
 				}
 			}
 		} catch(Throwable t) {

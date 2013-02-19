@@ -117,6 +117,10 @@ public abstract class KyoroStressService extends ForegroundService {
 		BigEater032Gouki.class,
 	};
 
+	public static int numOfBigEater() {
+		return ServiceProcessName.length;
+	}
+
 	public static String getID(int number) {
 			return ServiceProcessName[number];
 	}

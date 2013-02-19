@@ -9,14 +9,17 @@ import info.kyorohiro.helloworld.stressv2.BigEaterInfo;
 import info.kyorohiro.helloworld.stressv2.KyoroSetting;
 import info.kyorohiro.helloworld.stressv2.ProcessInfo;
 import info.kyorohiro.helloworld.util.SingleTaskRunner;
+import info.kyorohiro.helloworld.util.Utility;
 
-public class ListView extends SimpleDisplayObjectContainer {
+public class RunningBigEaterInfoLabel extends SimpleDisplayObjectContainer {
 
 	private SingleTaskRunner mTask = new SingleTaskRunner();
+	private int textSize = (int)Utility.inchi2pixel(Utility.mm2inchi(2.5));
 
 	@Override
 	public void paint(SimpleGraphics graphics) {
 		super.paint(graphics);
+		graphics.setTextSize(textSize);
 		int textHeight = graphics.getTextSize();
 		int drawTextPositionY = textHeight+60;
 		ProcessInfo[] infos = BigEaterInfo.getInstance().getWorkerInfo();
